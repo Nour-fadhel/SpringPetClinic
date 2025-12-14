@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+ stage('Fail test') {
+        steps {
+            sh 'exit 1'
+        }
+    }
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Nour-fadhel/SpringPetClinic.git', branch: 'master'
