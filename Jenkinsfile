@@ -50,21 +50,18 @@ pipeline {
         }
 
 
-     stage('Deploy to Minikube') {
-        steps {
-            script {
-                try {
-                    sh '''
-                      kubectl apply --validate=false -f k8s/deployment.yaml
-                      kubectl apply --validate=false -f k8s/service.yaml
-                      kubectl rollout status deployment/springpetclinic-deploy
-                    '''
-                } catch (err) {
-                    echo "Deploy to Minikube failed (permissions kubeconfig). Deployment can be applied manually with: kubectl apply -f k8s/"
-                }
-            }
-        }
+    stage('Deploy to Minikube') {
+    environment {
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
     }
+    steps {
+        sh '''
+          kubectl apply --validate=false -f k8s/deployment.yaml
+          kubectl apply --validate=false -f k8s/service.yaml
+          kubectl rollout status deployment/springpetclinic-deploy
+        '''
+    }
+}
 
      stage('Hello') {
             steps {
