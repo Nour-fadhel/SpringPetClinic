@@ -71,5 +71,16 @@ pipeline {
             }
         }
     }
+ 
+post {
+        failure {
+            emailext(
+                to: 'nourfadhel1201@gmail.com',
+                subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """Le build a échoué pour le job ${env.JOB_NAME} (build #${env.BUILD_NUMBER}).
+Consulte les logs ici : ${env.BUILD_URL}"""
+            )
+        }
+    }
 }
 
