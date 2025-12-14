@@ -4,7 +4,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/karoumbr/SpringPetClinic.git'
+                git url: 'https://github.com/Nour-fadhel/SpringPetClinic.git', branch: 'master'
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                sh 'mvn -B clean test'
             }
         }
 
@@ -15,3 +21,4 @@ pipeline {
         }
     }
 }
+
