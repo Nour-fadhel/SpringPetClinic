@@ -14,6 +14,14 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('local-sonarqube') {
+                    sh 'mvn -B sonar:sonar'
+                }
+            }
+        }
+
         stage('Hello') {
             steps {
                 echo 'Pipeline SpringPetClinic OK'
