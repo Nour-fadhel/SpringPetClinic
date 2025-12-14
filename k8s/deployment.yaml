@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springpetclinic-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springpetclinic
+  template:
+    metadata:
+      labels:
+        app: springpetclinic
+    spec:
+      containers:
+        - name: springpetclinic
+          image: nouurdevops/springpetclinic:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8085
