@@ -22,7 +22,19 @@ pipeline {
             }
         }
 
-        stage('Hello') {
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
+                        def image = docker.build("nouurdevops/spring-petclinic:${env.BUILD_NUMBER}")
+                        image.push()
+                        image.push('latest')
+                    }
+                }
+            }
+        }
+
+     stage('Hello') {
             steps {
                 echo 'Pipeline SpringPetClinic OK'
             }
