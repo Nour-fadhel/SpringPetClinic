@@ -13,6 +13,13 @@ pipeline {
                 sh 'mvn -B clean test'
             }
         }
+    stage('Selenium Tests') {
+        steps {
+            dir('selenium-tests/selenium-tests') {
+                sh 'mvn -B test'
+            }
+        }
+    }
 
         stage('SonarQube Analysis') {
             steps {
