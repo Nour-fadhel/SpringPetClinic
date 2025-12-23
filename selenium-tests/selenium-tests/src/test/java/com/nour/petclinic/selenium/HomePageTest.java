@@ -1,7 +1,9 @@
 package com.nour.petclinic.selenium;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,11 +13,18 @@ public class HomePageTest {
 
     private WebDriver driver;
 
-    @BeforeClass
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-    }
+  @BeforeClass
+  public void setUp() {
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless=new");
+    options.addArguments("--no-sandbox");
+    options.addArguments("--disable-dev-shm-usage");
+
+    driver = new ChromeDriver(options);
+    driver.manage().window().setSize(new Dimension(1920, 1080));
+    driver.get("http://192.168.49.2:30080/");
+}
+
 
     @Test
     public void homePageTitleShouldContainPetClinic() {
