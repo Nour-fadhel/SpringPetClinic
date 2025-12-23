@@ -16,19 +16,12 @@ pipeline {
         }
     
     stage('Selenium Tests') {
-        steps {
-            script {
-                try {
-                    dir('selenium-tests/selenium-tests') {
-                        sh 'mvn -B test'
-                    }
-                } catch (err) {
-                    echo "Selenium tests failed (probably no GUI/Chrome on Jenkins agent) : ${err}"
-                }
-            }
+    steps {
+        dir('selenium-tests/selenium-tests') {
+            sh 'mvn clean test'
         }
     }
-
+}
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('local-sonarqube') {
